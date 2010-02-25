@@ -109,6 +109,9 @@ module ResqueScheduler
     item
   end
 
+  def cron_not_done?(name, timestamp)
+    redis.getset("cron_#{name}", timestamp.to_i).to_s != timestamp.to_i.to_s
+  end
 end
 
 Resque.extend ResqueScheduler
